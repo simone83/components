@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+    xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:rich="http://richfaces.org/iteration">
+
+<h:head>
+</h:head>
+
+<h:body>
+
+    <h:form prependId="false">
+        <rich:extendedDataTable id="table" value="#{tableModel.simple}" var="var">
+
+            <rich:column id="column1">
+                <f:facet name="header">Column1</f:facet>
+                <h:outputText id="outputText1" value="#{var}" />
+            </rich:column>
+            
+            <rich:column id="column2">
+                <f:facet name="header">Column2</f:facet>
+                <h:outputText id="outputText2" value="#{var}" />
+            </rich:column>
+
+        </rich:extendedDataTable>
+        
+        <h:commandButton id="renderTable" value="Render Table">
+            <f:ajax render="table" />
+        </h:commandButton>
+    </h:form>
+
+</h:body>
+
+</html>
