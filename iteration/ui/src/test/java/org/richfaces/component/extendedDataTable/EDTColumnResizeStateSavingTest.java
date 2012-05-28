@@ -41,7 +41,7 @@ public class EDTColumnResizeStateSavingTest {
                 "net.sourceforge.cssparser:cssparser:0.9.5", "org.w3c.css:sac:1.3");
 
         return ShrinkWrap.create(WebArchive.class, "edt-test.war").addAsManifestResource("META-INF/iteration.taglib.xml")
-                .addAsManifestResource("META-INF/faces-config.xml").addAsWebInfResource("faces-config.xml")
+                .addAsWebInfResource("faces-config.xml")
                 .addAsWebResource("extendedDataTable/stateSaving.xhtml", "index.xhtml").addAsLibraries(mavenDependencies)
                 .addAsWebInfResource("beans.xml").addClass(TableModelBean.class);
     }
