@@ -24,15 +24,21 @@ package org.richfaces.renderkit;
 import java.io.IOException;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.application.ResourceDependencies;
 import javax.faces.application.ResourceDependency;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.ajax4jsf.javascript.JSReference;
+import org.richfaces.application.FacesMessages;
+import org.richfaces.application.MessageFactory;
+import org.richfaces.application.ServiceTracker;
 import org.richfaces.component.AbstractSelect;
 import org.richfaces.component.AbstractSelectComponent;
+import org.richfaces.javascript.JavaScriptService;
 import org.richfaces.renderkit.util.HtmlDimensions;
+import org.richfaces.validator.CSVMessageObject;
 
 /**
  * @author abelevich
@@ -50,6 +56,8 @@ import org.richfaces.renderkit.util.HtmlDimensions;
         @ResourceDependency(library = "org.richfaces", name = "select.ecss") })
 public class SelectRendererBase extends InputRendererBase {
     public static final String ITEM_CSS = "rf-sel-opt";
+
+    private static final String CLIENT_SIDE_MESSAGE_ADDED = SelectRendererBase.class.getName() + ".CLIENT_SIDE_MESSAGE_ADDED";
 
     public JSReference getClientFilterFunction(UIComponent component) {
         AbstractSelect select = (AbstractSelect) component;
@@ -146,5 +154,24 @@ public class SelectRendererBase extends InputRendererBase {
     public void encodeItems(FacesContext facesContext, UIComponent component, List<ClientSelectItem> clientSelectItems)
             throws IOException {
         SelectHelper.encodeItems(facesContext, component, clientSelectItems, HtmlConstants.DIV_ELEM, ITEM_CSS);
+    }
+
+    @Override
+    protected void preEncodeBegin(FacesContext facesContext, UIComponent component) throws IOException {
+
+        if (facesContext.getAttributes().get(CLIENT_SIDE_MESSAGE_ADDED) == null) {
+
+            JavaScriptService jsService = ServiceTracker.getService(JavaScriptService.class);
+
+            MessageFactory messageFactory = ServiceTracker.getService(MessageFactory.class);
+            FacesMessage facesMessage = messageFactory.createMessage(facesContext, FacesMessage.SEVERITY_ERROR,
+                    FacesMessages.UISELECTONE_INVALID, "{0}");
+
+            CSVMessageObject messageObject = new CSVMessageObject(FacesMessages.UISELECTONE_INVALID.name(), facesMessage);
+
+            jsService.addScript(facesContext, messageObject);
+
+            facesContext.getAttributes().put(CLIENT_SIDE_MESSAGE_ADDED, Boolean.TRUE);
+        }
     }
 }
