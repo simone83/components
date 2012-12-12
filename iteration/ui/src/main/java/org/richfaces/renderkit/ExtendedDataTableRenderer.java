@@ -54,6 +54,8 @@ import org.ajax4jsf.model.SequenceRange;
 import org.richfaces.cdk.annotations.JsfRenderer;
 import org.richfaces.component.AbstractExtendedDataTable;
 import org.richfaces.component.ExtendedDataTableState;
+import org.richfaces.component.ExtendedDataTableStateLoadedEvent;
+import org.richfaces.component.SortOrder;
 import org.richfaces.component.UIColumn;
 import org.richfaces.component.UIDataTableBase;
 import org.richfaces.component.util.HtmlUtil;
@@ -644,9 +646,10 @@ public class ExtendedDataTableRenderer extends SelectionRenderer implements Meta
 
     protected void doEncodeBegin(ResponseWriter writer, FacesContext context, UIComponent component) throws IOException {
         String savedTableState = (String) component.getAttributes().get("tableState");
-        if (savedTableState != null && !savedTableState.isEmpty()) { // retrieve table state
+        if (savedTableState != null && ! savedTableState.isEmpty()) { // retrieve table state
             ExtendedDataTableState tableState = new ExtendedDataTableState(savedTableState);
             consumeTableState(context, (UIDataTableBase) component, tableState);
+            context.getApplication().publishEvent(context,ExtendedDataTableStateLoadedEvent.class, component);
         }
 
         Map<String, Object> attributes = component.getAttributes();
@@ -913,20 +916,39 @@ public class ExtendedDataTableRenderer extends SelectionRenderer implements Meta
 
     public void consumeTableState(FacesContext facesContext, UIDataTableBase table, ExtendedDataTableState tableState) {
         Iterator<UIComponent> columns = table.columns();
+
+        // width, filter, sort
         while (columns.hasNext()) {
             UIComponent component = columns.next();
             if (component instanceof UIColumn) {
                 UIColumn column = (UIColumn) component;
+
                 String width = tableState.getColumnWidth(column);
                 if (width != null && ! width.equals(column.getWidth())) {
                     updateAttribute(facesContext, column, "width", width);
                 }
+
+                String filter = tableState.getColumnFilter(column);
+                if ( column.getFilterValue() == null &&  filter != null || column.getFilterValue() != null && column.getFilterValue().toString().equals(filter)) {
+                    updateAttribute(facesContext, column, "filterValue", filter);
+                }
+
+                String sort = tableState.getColumnSort(column);
+                if (sort != null) {
+                    SortOrder sortOrder = SortOrder.valueOf(sort);
+                    if (! sortOrder.equals(column.getSortOrder())) {
+                        updateAttribute(facesContext, column, "sortOrder", sortOrder);
+                    }
+                }
             }
         }
+
+        //order
         String[] columnsOrder = tableState.getColumnsOrder();
         if (columnsOrder != null) {
             updateAttribute(facesContext, table, "columnsOrder", columnsOrder);
         }
+
     }
 
 
