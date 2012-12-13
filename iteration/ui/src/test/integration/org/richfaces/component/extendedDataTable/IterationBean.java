@@ -45,7 +45,8 @@ public class IterationBean implements Serializable {
     private String filterState = "{'columnsFilterState':{'column2':'6'}}";
     private String[] columnsOrder = null; //{"column1", "column2"};
 
-    private SortOrder sortOrder = SortOrder.ascending;
+    private SortOrder sortOrder;// = SortOrder.ascending;
+    private SortOrder sortOrder2;// = SortOrder.ascending;
     private Long filterValue = 10L;
 
 
@@ -78,6 +79,10 @@ public class IterationBean implements Serializable {
 
     public SortOrder getSortOrder() {
         return sortOrder;
+    }
+
+    public SortOrder getSortOrder2() {
+        return sortOrder2;
     }
 
     public void setSortOrder(SortOrder sortOrder) {

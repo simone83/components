@@ -135,7 +135,6 @@ public class TestTableState {
     public void table_sort() throws InterruptedException {
         // given
         browser.get(contextPath.toExternalForm() + "sort.jsf");
-        Thread.sleep(500);
         WebElement cell = browser.findElements(By.cssSelector(".rf-edt-c-column2 .rf-edt-c-cnt")).get(0);
         Assert.assertEquals("9", cell.getText());
 

@@ -259,6 +259,23 @@ public class ExtendedDataTableRenderer extends SelectionRenderer implements Meta
                 writer.endElement(HtmlConstants.DIV_ELEM);
                 writer.endElement(HtmlConstants.DIV_ELEM);
             }
+
+            if (column.getValueExpression("sortBy") != null) {
+                writer.startElement(HtmlConstants.SPAN_ELEM, column);
+                String classAttr = "rf-edt-srt ";
+                SortOrder sortOrder = (SortOrder) column.getAttributes().get("sortOrder");
+                if (sortOrder == null || sortOrder == SortOrder.unsorted) {
+                    classAttr = classAttr + "rf-edt-srt-uns";
+                } else if (sortOrder == SortOrder.ascending) {
+                    classAttr = classAttr + "rf-edt-srt-asc";
+                } else if (sortOrder == SortOrder.descending) {
+                    classAttr = classAttr + "rf-edt-srt-des";
+                }
+                writer.writeAttribute(HtmlConstants.CLASS_ATTRIBUTE, classAttr, null);
+                writer.writeAttribute("data-columnid", column.getId(), null);
+                writer.endElement(HtmlConstants.SPAN_ELEM);
+            }
+
             writer.startElement(HtmlConstants.DIV_ELEM, column);
             writer.writeAttribute(HtmlConstants.CLASS_ATTRIBUTE, HtmlUtil.concatClasses("rf-edt-"
                 + getFacetClassName(facetName) + "-c", "rf-edt-c-" + column.getId()), null);
