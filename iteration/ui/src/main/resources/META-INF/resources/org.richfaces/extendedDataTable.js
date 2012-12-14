@@ -258,6 +258,14 @@
                 this.sort(columnId, sortOrder, false);
             },
 
+            filterHandler: function(event) {
+                var filterHandle = $(event.data.filterHandle);
+                var columnId = filterHandle.data('columnid');
+                var filterValue = filterHandle.val();
+                this.filter(columnId, filterValue, false);
+            },
+
+
             sort: function(colunmId, sortOrder, isClear) {
                 if (typeof(sortOrder) == "string") {
                     sortOrder = sortOrder.toLowerCase();
@@ -281,8 +289,11 @@
                 this.header.find(".rf-edt-rsz").bind("mousedown", jQuery.proxy(this.beginResize, this));
                 this.headerCells.bind("mousedown", jQuery.proxy(this.beginReorder, this));
                 var self = this;
-                this.header.find(".rf-edt-srt").each(function() {
+                this.header.find(".rf-edt-srt-btn").each(function() {
                     $(this).bind("click", {sortHandle: this}, jQuery.proxy(self.sortHandler, self));
+                });
+                this.header.find(".rf-edt-flt-i").each(function() {
+                    $(this).bind("blur", {filterHandle: this}, jQuery.proxy(self.filterHandler, self));
                 });
             },
 

@@ -34,7 +34,7 @@ import java.util.List;
  */
 @SessionScoped
 @Named
-public class IterationBean implements Serializable {
+public class IterationTableStateBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String[] array = {"3","6","4","8","2","1","5","7","9","0" };
@@ -50,7 +50,7 @@ public class IterationBean implements Serializable {
     private Long filterValue = 10L;
 
 
-    public IterationBean() {
+    public IterationTableStateBean() {
     }
 
     public List<String> getValues() {

@@ -37,7 +37,7 @@ public class TestColumnWidth {
     @Deployment
     public static WebArchive createDeployment() {
         IterationDeployment deployment = new IterationDeployment(TestColumnWidth.class);
-        deployment.archive().addClass(IterationBean.class);
+        deployment.archive().addClass(IterationTableStateBean.class);
         addIndexPage(deployment);
 
         return deployment.getFinalArchive();
