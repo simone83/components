@@ -1,6 +1,12 @@
 package org.richfaces.component;
 
-import com.google.common.base.Function;
+import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+
+import java.net.URL;
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -18,12 +24,7 @@ import org.openqa.selenium.support.FindBy;
 import org.richfaces.integration.OutputDeployment;
 import org.richfaces.shrinkwrap.descriptor.FaceletAsset;
 
-import javax.annotation.Nullable;
-import java.net.URL;
-import java.util.List;
-
-import static org.jboss.arquillian.graphene.Graphene.guardHttp;
-import static org.jboss.arquillian.graphene.Graphene.guardXhr;
+import com.google.common.base.Function;
 
 @RunAsClient
 @RunWith(Arquillian.class)
@@ -43,8 +44,9 @@ public class RF12765_Test {
 
     @Deployment
     public static WebArchive createDeployment() {
-//        OutputDeployment deployment = new OutputDeployment(RF12765_Test.class, "4.2.3.Final");
         OutputDeployment deployment = new OutputDeployment(RF12765_Test.class);
+//        OutputDeployment deployment = new OutputDeployment(RF12765_Test.class, "4.2.3.Final");
+//        deployment.withServletContainerSetup();
         deployment.archive().addClass(TabBean.class);
         deployment.archive().addClass(TabPanelBean.class);
 
@@ -56,6 +58,7 @@ public class RF12765_Test {
                         .paramName("javax.faces.PARTIAL_STATE_SAVING")
                         .paramValue("false")
                         .up();
+
                 return input;
             }
         });
@@ -65,8 +68,8 @@ public class RF12765_Test {
     }
 
     @Test
-    public void check_row_removal() throws InterruptedException {
-        browser.get(contextPath.toExternalForm());
+    public void check_row_removal() {
+        browser.get(contextPath.toExternalForm() + "/index.jsf");
 
         WebElement tabPanel = form.findElement(By.id("myForm:tabPanel"));
         List<WebElement> tabLabels = tabPanel.findElements(By.className("rf-tab-lbl"));

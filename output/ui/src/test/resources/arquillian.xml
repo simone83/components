@@ -25,10 +25,17 @@
     <engine>
         <property name="deploymentExportPath">target/</property>
     </engine>
-    
-    <container qualifier="jboss" default="true">
+
+    <container qualifier="jboss">
         <configuration>
             <property name="jbossHome">${jbossHome}</property>
+        </configuration>
+    </container>
+
+    <container qualifier="tomcat" default="true">
+        <configuration>
+            <property name="user">admin</property>
+            <property name="pass">pass</property>
         </configuration>
     </container>
 
