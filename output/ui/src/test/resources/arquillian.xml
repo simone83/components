@@ -49,5 +49,10 @@
         <property name="chromeDriverBinary">/opt/google/chrome/chromedriver</property>
 
     </extension>
+    
+    <extension qualifier="richfaces">
+        <property name="richfacesVersion">${arquillian.richfaces.version}</property>
+        <property name="servletContainerSetup">${arquillian.richfaces.servletContainerSetup}</property>
+    </extension>
 
 </arquillian>

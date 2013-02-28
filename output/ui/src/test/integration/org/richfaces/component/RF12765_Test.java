@@ -45,8 +45,6 @@ public class RF12765_Test {
     @Deployment
     public static WebArchive createDeployment() {
         OutputDeployment deployment = new OutputDeployment(RF12765_Test.class);
-//        OutputDeployment deployment = new OutputDeployment(RF12765_Test.class, "4.2.3.Final");
-//        deployment.withServletContainerSetup();
         deployment.archive().addClass(TabBean.class);
         deployment.archive().addClass(TabPanelBean.class);
 
