@@ -53,6 +53,16 @@
             <property name="pass">pass</property>
         </configuration>
     </container>
+    
+    <container qualifier="tomee15" default="${arquillian.launch.tomee15}">
+        <configuration>
+            <property name="httpPort">8080</property>
+            <property name="stopPort">9005</property>
+            <property name="version">${version.tomee15}</property>
+            <property name="dir">target/apache-tomee-webprofile-${version.tomee15}</property>
+            <property name="appWorkingDir">target/arquillian-test-working-dir</property>
+        </configuration>
+    </container>
 
     <extension qualifier="webdriver">
         <property name="javascriptEnabled">true</property>
