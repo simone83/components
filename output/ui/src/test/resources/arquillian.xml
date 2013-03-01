@@ -22,18 +22,19 @@
 
     <defaultProtocol type="Servlet 3.0" />
 
-    <!-- <engine>
+    <engine>
         <property name="deploymentExportPath">target/</property>
-    </engine> -->
+    </engine>
 
-    <container qualifier="jboss">
+    <container qualifier="jbossas71" default="${arquillian.launch.jbossas71}">
         <configuration>
             <property name="jbossHome">${jbossHome}</property>
         </configuration>
     </container>
 
-    <container qualifier="tomcat-managed-6">
+    <container qualifier="tomcat6" default="${arquillian.launch.tomcat6}">
         <configuration>
+            <property name="catalinaHome">${catalinaHome}</property>
             <property name="javaVmArguments">
                 -Dcom.sun.management.jmxremote.port=8089 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
             </property>
@@ -42,8 +43,9 @@
         </configuration>
     </container>
 
-    <container qualifier="tomcat-managed-7">
+    <container qualifier="tomcat7" default="${arquillian.launch.tomcat7}">
         <configuration>
+            <property name="catalinaHome">${catalinaHome}</property>
             <property name="javaVmArguments">
                 -Dcom.sun.management.jmxremote.port=8089 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
             </property>
