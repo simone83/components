@@ -63,6 +63,12 @@
             <property name="appWorkingDir">target/arquillian-test-working-dir</property>
         </configuration>
     </container>
+    
+    <container qualifier="glassfish31" default="${arquillian.launch.glassfish31}">
+        <configuration>
+            <property name="glassFishHome">${glassFishHome}</property>
+        </configuration>
+    </container>
 
     <extension qualifier="webdriver">
         <property name="javascriptEnabled">true</property>
@@ -78,6 +84,7 @@
     <extension qualifier="richfaces">
         <property name="richfacesVersion">${arquillian.richfaces.version}</property>
         <property name="servletContainerSetup">${arquillian.richfaces.servletContainerSetup}</property>
+        <property name="jsfImplementation">${arquillian.richfaces.jsfImplementation}</property>
     </extension>
 
 </arquillian>
