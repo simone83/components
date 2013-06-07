@@ -45,7 +45,7 @@ public class FileUploadRendererBase extends RendererBase {
             for (UploadedFile file : multipartRequest.getUploadedFiles()) {
                 if (clientId.equals(file.getParameterName())) {
                     component.queueEvent(new FileUploadEvent(component, file));
-                    break;
+                   // break;  NOTE - deleted by Simone Cinti, enables multiple event enqueue for multiple upload
                 }
             }
         }
